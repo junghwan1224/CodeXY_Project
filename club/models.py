@@ -8,8 +8,19 @@ class Club(models.Model):
             max_length=50,
             verbose_name='club name',
         )
-    club_image = models.ImageField()
-    club_description = models.TextField(verbose_name='club description')
+    club_image = models.ImageField(
+            upload_to='profile/%Y/%m/%d/',
+            blank=True,
+            null=True,
+        )
+    club_description = models.TextField(
+        verbose_name='club description',
+        blank=True,
+        null=True,
+        )
+    position = models.BooleanField(
+            default=True,
+        )
 
     def __str__(self):
         return self.club_name

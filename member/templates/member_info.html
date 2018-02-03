@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  {% if request.user.is_authenticated %}
+    {{ request.user.username }}
+    <form method='POST' action="{% url 'account:logout' %}">
+      {% csrf_token %}
+      <button type='submit'>logout</button>
+    </form>
+    <a type='button' href="{% url 'club:entry_club' %}">entry club</a>
+    <hr>
+  {% else %}
+    no user error
+  {% endif %}
+</body>
+</html>

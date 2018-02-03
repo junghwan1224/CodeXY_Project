@@ -1,17 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from club.models import Club
+from django.conf import settings
 # Create your models here.
 
 
 class Profile(models.Model):
-    club = models.ForeignKey(
+    club = models.ManyToManyField(
             Club,
-            on_delete=models.CASCADE,
             related_name='club_member',
         )
     user = models.OneToOneField(
-            User,
+            settings.AUTH_USER_MODEL,
             on_delete=models.CASCADE,
         )
     # name = models.CharField(
@@ -30,19 +30,23 @@ class Profile(models.Model):
     #         max_length=50,
     #         verbose_name='member email',
     #     )
-    position = models.BooleanField(
-            required=False,
-        )
+    # position = models.BooleanField(
+    #         default=False,
+    #     )
+
+
+class Member(models.Model):
+    pass
 
 
 class Attendance(models.Model):
     member = models.ForeignKey(
-            Profile,
+            Member,
             on_delete=models.CASCADE,
             related_name='member_info',
         )
     attendance_check = models.BooleanField(
-            required=False,
+            default=False,
         )
     attendance_date = models.DateTimeField(
             auto_now_add=True,
@@ -51,10 +55,9 @@ class Attendance(models.Model):
 
 
 class Absence(models.Model):
-    attendance = models.ForeignKey(
+    attendance = models.OneToOneField(
             Attendance,
             on_delete=models.CASCADE,
-            related_name='attendance',
         )
     minus = models.IntegerField(
             default=0,
