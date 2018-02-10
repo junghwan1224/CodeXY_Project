@@ -1,0 +1,9 @@
+admin club page
+
+{% for club in club_list %}
+<ul>
+  <li><a href="">{{ club.club.club_name }}</a></li>
+</ul>
+{% empty %}
+no club as admin
+{% endfor %}

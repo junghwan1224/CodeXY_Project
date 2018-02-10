@@ -112,7 +112,7 @@ LOGIN_REDIRECT_URL = 'member_info/'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 

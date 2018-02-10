@@ -19,7 +19,8 @@ class SignupForm(UserCreationForm):
     error_messages = {
         'password_mismatch': '잘못된 비밀번호입니다.',
     }
-    name = forms.CharField()
+    first_name = forms.CharField()
+    last_name = forms.CharField()
     email = forms.EmailField()
 
     def clean_email(self):
@@ -28,15 +29,22 @@ class SignupForm(UserCreationForm):
             raise forms.ValidationError('email input error')
         return email
 
-    def clean_name(self):
-        name = self.cleaned_data.get('name')
+    def clean_first_name(self):
+        name = self.cleaned_data.get('first_name')
         if name is None:
-            raise forms.ValidationError('input name')
+            raise forms.ValidationError('input  firstname')
+        return name
+
+    def clean_last_name(self):
+        name = self.cleaned_data.get('last_name')
+        if name is None:
+            raise forms.ValidationError('input last name')
         return name
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.name = self.cleaned_data['name']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
         user.email = self.cleaned_data['email']
         if commit:
             user.save()

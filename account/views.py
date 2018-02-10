@@ -33,7 +33,7 @@ def login(request):
 def logout(request):
     if request.method == 'POST':
         auth_logout(request)
-    return redirect('account:login')
+    return redirect('member:member_info')
 
 
 def signup(request):

@@ -6,18 +6,14 @@ from django.conf import settings
 
 
 class Profile(models.Model):
-    club = models.ManyToManyField(
-            Club,
-            related_name='club_member',
-        )
+    # club = models.ManyToManyField(
+    #         Club,
+    #         related_name='club_profile',
+    #     )
     user = models.OneToOneField(
             settings.AUTH_USER_MODEL,
             on_delete=models.CASCADE,
         )
-    # name = models.CharField(
-    #         max_length=20,
-    #         verbose_name='member name',
-    #     )
     school = models.CharField(
             max_length=20,
             verbose_name='member school',
@@ -26,17 +22,19 @@ class Profile(models.Model):
             max_length=20,
             verbose_name='phone number',
         )
-    # email = models.CharField(
-    #         max_length=50,
-    #         verbose_name='member email',
-    #     )
-    # position = models.BooleanField(
-    #         default=False,
-    #     )
 
 
 class Member(models.Model):
-    pass
+    club = models.ForeignKey(
+            Club,
+            on_delete=models.CASCADE,
+            related_name='club_member',
+        )
+    member = models.ForeignKey(
+            Profile,
+            on_delete=models.CASCADE,
+            related_name='user_profile',
+        )
 
 
 class Attendance(models.Model):

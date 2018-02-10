@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  {% if request.user.is_authenticated %}
+    {{ request.user.username }}
+    <form method='POST' action="{% url 'account:logout' %}">
+      {% csrf_token %}
+      <button type='submit'>logout</button>
+    </form>
+    <ul>
+      <li><a href="{% url 'member:edit_profile' %}">edit profile</a></li>
+      <li><a href="{% url 'club:entry_club' %}">entry club</a></li>
+      <li><a href="{% url 'club:admin_club' request.user.profile.pk %}">my club as admin</a></li>
+      <li><a href="{% url 'club:as_member_club' request.user.profile.pk %}">my club as member</a></li>
+    </ul>
+  {% else %}
+    no user
+    <a href="{% url 'account:login' %}">login</a>
+  {% endif %}
+
+  <form method='GET' enctype="multipart/form-data">
+    <input type='text' name='q' value='{{ q }}' placeholder="club search" />
+    <button type='submit'>Search</button>
+  </form>
+
+  {% for club in search_result %}
+  <ul>
+    <li><a href="">{{ club.club_name }}</a>&nbsp;<a href=""><button>apply</button></a></li>
+  </ul>
+    {% empty %}
+      no search result
+  {% endfor %}
+</body>
+</html>
